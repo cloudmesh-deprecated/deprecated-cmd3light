@@ -7,16 +7,16 @@ import string
 import textwrap
 
 from docopt import docopt
-from cloudmesh_client.shell.plugins.ManCommand import ManCommand
-from cloudmesh_client.shell.plugins.TerminalCommands import TerminalCommands
-from cloudmesh_client.shell.plugins.OpenCommand import OpenCommand
-from cloudmesh_client.shell.plugins.SecureShellCommand import SecureShellCommand
-from cloudmesh_client.version import version
+from cloudmesh_cmd3light.plugins.ManCommand import ManCommand
+from cloudmesh_cmd3light.plugins.TerminalCommands import TerminalCommands
+from cloudmesh_cmd3light.plugins.OpenCommand import OpenCommand
+from cloudmesh_cmd3light.plugins.SecureShellCommand import SecureShellCommand
+from cloudmesh_cmd3light.version import version
 from cloudmesh_base.util import get_python
 from cloudmesh_base.util import check_python
 import cloudmesh_base
-from cloudmesh_client.common.tables import dict_printer
-from cloudmesh_client.shell.command import command
+from cloudmesh_base.tables import dict_printer
+from cloudmesh_cmd3light.command import command
 
 
 class CloudmeshContext(object):

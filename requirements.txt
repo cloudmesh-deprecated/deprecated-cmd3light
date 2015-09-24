@@ -1,0 +1,13 @@
+pyreadline<=1.7.1.dev-r0
+colorama
+cloudmesh_base
+future
+docopt
+pyaml
+simplejson
+python-hostlist
+prettytable
+urllib3
+requests
+gitchangelog
+six

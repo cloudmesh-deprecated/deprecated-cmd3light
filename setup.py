@@ -39,11 +39,11 @@ from cloudmesh_base.setup import parse_requirements, os_execute, get_version_fro
 
 version = get_version_from_git()
 
-banner("Installing Cloudmesh_client {:}".format(version))
+banner("Installing Cloudmesh_cmd3light {:}".format(version))
 
 requirements = parse_requirements('requirements.txt')
 
-auto_create_version("cloudmesh_client", version, filename="version.py")
+auto_create_version("cloudmesh_cmd3light", version, filename="version.py")
         
 class UploadToPypi(install):
     """Upload the package to pypi. -- only for Maintainers."""
@@ -51,7 +51,7 @@ class UploadToPypi(install):
     description = __doc__
 
     def run(self):
-        auto_create_version("cloudmesh_client", version, filename="version.py")
+        auto_create_version("cloudmesh_cmd3light", version, filename="version.py")
         os.system("make clean")
         commands = """
             python setup.py install
@@ -61,7 +61,7 @@ class UploadToPypi(install):
         os_execute(commands)    
 
 class InstallBase(install):
-    """Install the cloudmesh_client package."""
+    """Install the cloudmesh package."""
 
     description = __doc__
 
@@ -79,8 +79,8 @@ class InstallBase(install):
                 """
         if commands:
             os_execute(commands)
-        import cloudmesh_client
-        banner("Install Cloudmesh_client {:}".format(version))
+        import cloudmesh_cmd3light
+        banner("Install Cloudmesh_cmd3light {:}".format(version))
         install.run(self)
 
 
@@ -94,18 +94,18 @@ home = os.path.expanduser("~")
 #print [ (home + '/.cloudmesh/' + d, [os.path.join(d, f) for f in files]) for d, folders, files in os.walk('etc')],
 #sys.exit()
 
-data_files= [ (os.path.join(home, '.cloudmesh'),
-                [os.path.join(d, f) for f in files]) for d, folders, files in os.walk(
-                    os.path.join('cloudmesh_client', 'etc'))]
+#data_files= [ (os.path.join(home, '.cloudmesh'),
+#                [os.path.join(d, f) for f in files]) for d, folders, files in os.walk(
+#                    os.path.join('cloudmesh_client', 'etc'))]
 
 import fnmatch
 import os
 
-matches = []
-for root, dirnames, filenames in os.walk(os.path.join('cloudmesh_client', 'etc')):
-  for filename in fnmatch.filter(filenames, '*'):
-    matches.append(os.path.join(root, filename).lstrip('cloudmesh_client/'))
-data_dirs = matches
+#matches = []
+#for root, dirnames, filenames in os.walk(os.path.join('cloudmesh_client', 'etc')):
+#  for filename in fnmatch.filter(filenames, '*'):
+#    matches.append(os.path.join(root, filename).lstrip('cloudmesh_client/'))
+#data_dirs = matches
 
 
 # Hack because for some reason requirements does not work
@@ -167,11 +167,11 @@ setup(
     packages=find_packages(),
     install_requires=requirements,
     include_package_data=True,
-    data_files= data_files,
-    package_data={'cloudmesh_client': data_dirs},
+    # data_files= data_files,
+    # package_data={'cloudmesh_client': data_dirs},
     entry_points={
         'console_scripts': [
-            'cm = cloudmesh_cmd3light.shell.cm:main',
+            'cml = cloudmesh_cmd3light.cm:main',
         ],
     },
     tests_require=['tox'],
