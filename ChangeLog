@@ -1,0 +1,17 @@
+Changelog
+=========
+
+%%version%% (unreleased)
+------------------------
+
+New
+~~~
+
+- Add a lightweight non dynamic command shell. [Gregor von Laszewski]
+
+Other
+~~~~~
+
+- Initial commit. [Gregor von Laszewski]
+
+
