@@ -7,38 +7,39 @@ import string
 import textwrap
 
 from docopt import docopt
-from cloudmesh_cmd3light.plugins.ManCommand import ManCommand
-from cloudmesh_cmd3light.plugins.TerminalCommands import TerminalCommands
-from cloudmesh_cmd3light.plugins.OpenCommand import OpenCommand
-from cloudmesh_cmd3light.plugins.SecureShellCommand import SecureShellCommand
+import cloudmesh_cmd3light.plugins
+#from cloudmesh_cmd3light.plugins.ManCommand import ManCommand
+#from cloudmesh_cmd3light.plugins.TerminalCommands import TerminalCommands
+#from cloudmesh_cmd3light.plugins.OpenCommand import OpenCommand
+#from cloudmesh_cmd3light.plugins.SecureShellCommand import SecureShellCommand
+
 from cloudmesh_cmd3light.version import version
 from cloudmesh_base.util import get_python
 from cloudmesh_base.util import check_python
 import cloudmesh_base
 from cloudmesh_base.tables import dict_printer
 from cloudmesh_cmd3light.command import command
-
+import imp
 
 class CloudmeshContext(object):
     def __init__(self, **kwargs):
         self.__dict__ = kwargs
 
+import importlib
 
 # noinspection PyPep8Naming
 class CloudmeshConsole(cmd.Cmd,
-                       TerminalCommands,
-                       ManCommand,
-                       SecureShellCommand,
-                       OpenCommand):
+                       cloudmesh_cmd3light.plugins.TerminalCommands,
+                       cloudmesh_cmd3light.plugins.ManCommand,
+                       cloudmesh_cmd3light.plugins.SecureShellCommand,
+                       cloudmesh_cmd3light.plugins.OpenCommand):
     """
     Cloudmesh Console
     """
+
     def register_topics(self):
         topics = {}
-        for command in [TerminalCommands,
-                       ManCommand,
-                       SecureShellCommand,
-                       OpenCommand]:
+        for command in self.default_plugins:
             tmp = command.topics.copy()
             topics.update(tmp)
         for name in topics:
@@ -47,7 +48,19 @@ class CloudmeshConsole(cmd.Cmd,
             self.register_command_topic("shell", name)
 
 
-    def __init__(self, context):
+    def __init__(self, context, plugins=None):
+        self.default_plugins = [
+            cloudmesh_cmd3light.plugins.TerminalCommands,
+            cloudmesh_cmd3light.plugins.ManCommand,
+            cloudmesh_cmd3light.plugins.SecureShellCommand,
+            cloudmesh_cmd3light.plugins.OpenCommand]
+
+        self.default_plugin_names = [
+            "cloudmesh_cmd3light.plugins.TerminalCommands",
+            "cloudmesh_cmd3light.plugins.ManCommand",
+            "cloudmesh_cmd3light.plugins.SecureShellCommand",
+            "cloudmesh_cmd3light.plugins.OpenCommand"]
+
         cmd.Cmd.__init__(self)
         self.command_topics = {}
         self.register_topics()
