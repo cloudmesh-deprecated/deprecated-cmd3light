@@ -1,8 +1,11 @@
 from __future__ import print_function
-from cloudmesh_client.shell.command_decorator import command
+from cloudmesh_cmd3light.command import command
 
 
-class BarCommand(object):
+from cloudmesh_cmd3light.command import command, Cmd3Command
+from cloudmesh_cmd3light.console import Console
+
+class BarCommand(Cmd3Command):
 
     topics = {"bar": "example"}
 

@@ -8,17 +8,16 @@ import textwrap
 
 from docopt import docopt
 import cloudmesh_cmd3light.plugins
-#from cloudmesh_cmd3light.plugins.ManCommand import ManCommand
-#from cloudmesh_cmd3light.plugins.TerminalCommands import TerminalCommands
-#from cloudmesh_cmd3light.plugins.OpenCommand import OpenCommand
-#from cloudmesh_cmd3light.plugins.SecureShellCommand import SecureShellCommand
+
+from cloudmesh_cmd3light.plugins.Bar import BarCommand
+
 
 from cloudmesh_cmd3light.version import version
 from cloudmesh_base.util import get_python
 from cloudmesh_base.util import check_python
 import cloudmesh_base
 from cloudmesh_base.tables import dict_printer
-from cloudmesh_cmd3light.command import command
+from cloudmesh_cmd3light.command import command, Cmd3Command
 import imp
 
 class CloudmeshContext(object):
@@ -27,8 +26,14 @@ class CloudmeshContext(object):
 
 import importlib
 
+names  = [cls.__name__ for cls in Cmd3Command.__subclasses__()]
+classes  = [cls for cls in Cmd3Command.__subclasses__()]
+
+
+# type(cmd.Cmd)("MyCli", bases + (cmd.Cmd,), {})
 # noinspection PyPep8Naming
-class CloudmeshConsole(cmd.Cmd,
+class CloudmeshBaseConsole(cmd.Cmd,
+                       cloudmesh_cmd3light.plugins.CommandsCommands,
                        cloudmesh_cmd3light.plugins.TerminalCommands,
                        cloudmesh_cmd3light.plugins.ManCommand,
                        cloudmesh_cmd3light.plugins.SecureShellCommand,
@@ -36,6 +41,9 @@ class CloudmeshConsole(cmd.Cmd,
     """
     Cloudmesh Console
     """
+
+    stdout = sys.stdout
+    command_topics = {}
 
     def register_topics(self):
         topics = {}
@@ -49,22 +57,17 @@ class CloudmeshConsole(cmd.Cmd,
 
 
     def __init__(self, context, plugins=None):
-        self.default_plugins = [
-            cloudmesh_cmd3light.plugins.TerminalCommands,
-            cloudmesh_cmd3light.plugins.ManCommand,
-            cloudmesh_cmd3light.plugins.SecureShellCommand,
-            cloudmesh_cmd3light.plugins.OpenCommand]
+        self.default_plugins = \
+            [cls for cls in Cmd3Command.__subclasses__()]
 
-        self.default_plugin_names = [
-            "cloudmesh_cmd3light.plugins.TerminalCommands",
-            "cloudmesh_cmd3light.plugins.ManCommand",
-            "cloudmesh_cmd3light.plugins.SecureShellCommand",
-            "cloudmesh_cmd3light.plugins.OpenCommand"]
+        self.default_plugin_names = \
+            [cls.__name__ for cls in Cmd3Command.__subclasses__()]
 
         cmd.Cmd.__init__(self)
         self.command_topics = {}
         self.register_topics()
         self.context = context
+
         if self.context.debug:
             print("init CloudmeshConsole")
 
@@ -270,9 +273,35 @@ class CloudmeshConsole(cmd.Cmd,
         print(arguments)
     '''
 
+# MyClass = type('MyClass', (), {})
+
+def get_class(str):
+    getattr(sys.modules[__name__], str)
+
+def cmd3_factory(bases=None):
+    # classes  = [cls for cls in Cmd3Command.__subclasses__()]
+    #    included_bases = [cls for cls in CloudmeshBaseConsole.__subclasses__()]
+
+    console_base = (CloudmeshBaseConsole,)
+
+    if bases is not None:
+        new_bases =  ()
+        for base in bases:
+            new_bases += (base,)
+        bases = new_bases + console_base
+    else:
+        bases = console_base
+    return type("CloudmeshConsole", bases, {})
+
+
+CloudmeshConsole =  cmd3_factory(
+   [cloudmesh_cmd3light.plugins.Bar.BarCommand]
+)
+# CloudmeshConsole =  cmd3_factory()
+
 
 def simple():
-    context = CloudmeshContext(debug=False,
+    context = CloudmeshContext(debug=True,
                                splash=True)
     con = CloudmeshConsole(context)
     con.cmdloop()

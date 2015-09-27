@@ -1,11 +1,11 @@
 from __future__ import print_function
-from cloudmesh_client.shell.command import command
-from cloudmesh_client.shell.console import Console
+from cloudmesh_cmd3light.command import command, Cmd3Command
+from cloudmesh_cmd3light.console import Console
 import os
 from cloudmesh_client.common.todo import TODO
 from cloudmesh_base.ssh_config import ssh_config
 
-class SecureShellCommand(object):
+class SecureShellCommand(Cmd3Command):
     # def activate_cm_shell_ssh(self):
 
     topics = {"ssh": "security"}

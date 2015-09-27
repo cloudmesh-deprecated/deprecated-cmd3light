@@ -4,6 +4,7 @@ import shlex
 
 from docopt import docopt
 
+class Cmd3Command (object): pass
 
 def command(func):
     '''

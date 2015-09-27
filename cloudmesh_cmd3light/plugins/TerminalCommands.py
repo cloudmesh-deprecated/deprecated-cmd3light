@@ -3,22 +3,21 @@ import os
 import sys
 
 from builtins import input
-from cloudmesh_client.shell.command import command
-from cloudmesh_client.shell.console import Console
+from cloudmesh_cmd3light.command import command, Cmd3Command
+from cloudmesh_cmd3light.console import Console
 
 
-class TerminalCommands(object):
+class TerminalCommands(Cmd3Command):
 
     topics = {"clear": "shell",
-              "banner": "shell"}
+              "banner": "shell",
+              "pause": "shell"}
 
     def __init__(self, context):
         self.context = context
         if self.context.debug:
-            print("init command clear")
-            print("init command banner")
-
-            # self.register_command_topic('cloud', 'admin')
+            for c in self.topics:
+                print("init command {}".format(c))
 
     @command
     def do_clear(self, arg, arguments):

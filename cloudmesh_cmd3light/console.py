@@ -48,6 +48,7 @@ class Console(object):
         'RED': Fore.RED,
         'ENDC': '\033[0m',
         'BOLD': "\033[1m",
+        'OK': Fore.GREEN,
     }
 
     theme_bw = {
@@ -63,6 +64,7 @@ class Console(object):
         'RED': '',
         'ENDC': '',
         'BOLD': "",
+        'OK': "",
     }
 
     theme = theme_color

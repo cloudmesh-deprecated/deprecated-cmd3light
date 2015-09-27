@@ -1,11 +1,11 @@
 import webbrowser
 import os
 
-from cloudmesh_client.shell.console import Console
-from cloudmesh_client.shell.command import command
+from cloudmesh_cmd3light.console import Console
+from cloudmesh_cmd3light.command import command, Cmd3Command
 
 # noinspection PyUnusedLocal
-class OpenCommand:
+class OpenCommand (Cmd3Command):
 
     topics = {"open": "shell"}
 

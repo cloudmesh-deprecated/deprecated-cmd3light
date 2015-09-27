@@ -1,9 +1,10 @@
 import textwrap
 
-from cloudmesh_client.shell.command import command
+from cloudmesh_cmd3light.command import command, Cmd3Command
 
 
-class ManCommand(object):
+
+class ManCommand(Cmd3Command):
 
     topics = {"man": "shell"}
 

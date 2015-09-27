@@ -96,15 +96,15 @@ home = os.path.expanduser("~")
 
 #data_files= [ (os.path.join(home, '.cloudmesh'),
 #                [os.path.join(d, f) for f in files]) for d, folders, files in os.walk(
-#                    os.path.join('cloudmesh_client', 'etc'))]
+#                    os.path.join('cloudmesh_cmd3light', 'etc'))]
 
 import fnmatch
 import os
 
 #matches = []
-#for root, dirnames, filenames in os.walk(os.path.join('cloudmesh_client', 'etc')):
+#for root, dirnames, filenames in os.walk(os.path.join('cloudmesh_cmd3light', 'etc')):
 #  for filename in fnmatch.filter(filenames, '*'):
-#    matches.append(os.path.join(root, filename).lstrip('cloudmesh_client/'))
+#    matches.append(os.path.join(root, filename).lstrip('cloudmesh_cmd3light/'))
 #data_dirs = matches
 
 
@@ -132,7 +132,7 @@ class Tox(TestCommand):
         sys.exit(errno)
 
 
-APP = [os.path.join('cloudmesh_client', 'shell.py')]
+APP = [os.path.join('cloudmesh_cmd3light', 'shell.py')]
 OPTIONS = {'argv_emulation': True}
             
 setup(
@@ -140,13 +140,13 @@ setup(
 #    options={'py2app': OPTIONS},
 #    app=APP,
     version=version,
-    name="cloudmesh_client",
-    description="cloudmesh_client - A dynamic CMD shell with plugins",
+    name="cloudmesh_cmd3light",
+    description="cloudmesh_cmd3light - A dynamic CMD shell with plugins",
     long_description=read('README.rst'),
     license="Apache License, Version 2.0",
     author="Gregor von Laszewski",
     author_email="laszewski@gmail.com",
-    url="https://github.com/cloudmesh/cloudmesh_client",
+    url="https://github.com/cloudmesh/cloudmesh_cmd3light",
     classifiers=[
         "Intended Audience :: Developers",
         "Intended Audience :: Education",
@@ -168,7 +168,7 @@ setup(
     install_requires=requirements,
     include_package_data=True,
     # data_files= data_files,
-    # package_data={'cloudmesh_client': data_dirs},
+    # package_data={'cloudmesh_cmd3light': data_dirs},
     entry_points={
         'console_scripts': [
             'cml = cloudmesh_cmd3light.cm:main',
