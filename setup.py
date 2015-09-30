@@ -32,26 +32,33 @@ except:
     os.system("pip install git+https://github.com/cloudmesh/base.git")
 
 from cloudmesh_base.util import banner
-from cloudmesh_base.util import path_expand
-from cloudmesh_base.Shell import Shell
-from cloudmesh_base.util import auto_create_version
-from cloudmesh_base.setup import parse_requirements, os_execute, get_version_from_git
+from cloudmesh_base.setup import  os_execute, get_version_from_git
+from cloudmesh_cmd3light import __version__
 
-version = get_version_from_git()
+banner("Installing Cloudmesh_cmd3light {:}".format(__version__))
 
-banner("Installing Cloudmesh_cmd3light {:}".format(version))
+requirements = ['pyreadline<=1.7.1.dev-r0',
+                'colorama',
+                'cloudmesh_base',
+                'future',
+                'docopt',
+                'pyaml',
+                'simplejson',
+                'python-hostlist',
+                'prettytable',
+                'sqlalchemy',
+                'urllib3',
+                'requests',
+                'sandman',
+                'gitchangelog',
+                'six']
 
-requirements = parse_requirements('requirements.txt')
-
-auto_create_version("cloudmesh_cmd3light", version, filename="version.py")
-        
 class UploadToPypi(install):
     """Upload the package to pypi. -- only for Maintainers."""
 
     description = __doc__
 
     def run(self):
-        auto_create_version("cloudmesh_cmd3light", version, filename="version.py")
         os.system("make clean")
         commands = """
             python setup.py install
@@ -80,7 +87,7 @@ class InstallBase(install):
         if commands:
             os_execute(commands)
         import cloudmesh_cmd3light
-        banner("Install Cloudmesh_cmd3light {:}".format(version))
+        banner("Install Cloudmesh_cmd3light {:}".format(__version__))
         install.run(self)
 
 
@@ -139,7 +146,7 @@ setup(
 #    setup_requires=['py2app'],
 #    options={'py2app': OPTIONS},
 #    app=APP,
-    version=version,
+    version=__version__,
     name="cloudmesh_cmd3light",
     description="cloudmesh_cmd3light - A dynamic CMD shell with plugins",
     long_description=read('README.rst'),
@@ -180,7 +187,6 @@ setup(
         'pypi': UploadToPypi,
         'test': Tox
     },
-    dependency_links =
-        ['git+https://github.com/cloudmesh/base.git']
+    dependency_links = []
 )
 
