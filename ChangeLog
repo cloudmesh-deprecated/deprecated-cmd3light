@@ -7,6 +7,19 @@ Changelog
 New
 ~~~
 
+- Add automatic changlog from git. [Gregor von Laszewski]
+
+Other
+~~~~~
+
+- 1.0. [Gregor von Laszewski]
+
+1.0 (2015-09-25)
+----------------
+
+New
+~~~
+
 - Add a lightweight non dynamic command shell. [Gregor von Laszewski]
 
 Other
