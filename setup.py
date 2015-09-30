@@ -62,7 +62,7 @@ class UploadToPypi(install):
         os.system("make clean")
         commands = """
             python setup.py install
-            python setup.py bdist_wheel            
+            python setup.py bdist_wheel upload
             python setup.py sdist --format=bztar,zip upload
             """
         os_execute(commands)    
